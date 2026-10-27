@@ -53,7 +53,7 @@ const loggerWorkSchema = new mongoose.Schema({
         enum:["Mayank","Tarun"],
         required:true
     },
-    contactedPersonAtSite:{
+    contactedPerson:{
         type:String,
         enum:["Customer","Site Engineer"],
         required:true
