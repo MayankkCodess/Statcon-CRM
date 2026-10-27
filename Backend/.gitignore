@@ -1,0 +1,50 @@
+# Environment secrets (CRITICAL)
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Dependencies 
+node_modules/
+vendor/
+.venv/
+bin/
+obj/
+
+# Build and log outputs
+dist/
+build/
+out/
+*.log
+
+# IDE & OS clutter
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+# Environment secrets (CRITICAL)
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Dependencies 
+node_modules/
+vendor/
+.venv/
+bin/
+obj/
+
+# Build and log outputs
+dist/
+build/
+out/
+*.log
+
+# IDE & OS clutter
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
