@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const loggerWorkSchema = new mongoose.Schema({
+const complaintSchema = new mongoose.Schema({
     mobileNumber:{
         type:String, // why
         trim:true,
@@ -60,9 +60,9 @@ const loggerWorkSchema = new mongoose.Schema({
     }
 },{timestamps:true})
 
-const LoggerWork = mongoose.model('LoggerWork',loggerWorkSchema);
+const Complaint = mongoose.model('Complaint',complaintSchema);
 
-export default LoggerWork;
+export default Complaint;
 
 
 /*

@@ -11,21 +11,22 @@ import {
 } from "../components/ui/select.jsx"
 import {Button} from "../components/ui/button.jsx";
 import { useState } from "react";
-
+import axios from "axios";
+import { toast } from "sonner"
 // Every New Learning is Covered Below :- 1. what happens from w-full and max-w-48
 function WorkPage() {
 
     // First you need to create Data for Vendor and then use that data to convert it into React Components
     const vendorList = [
-        {label:"Exide",value:"exide"},
-        {label:"Genus",value:"genus"},
-        {label:"Ecozen",value:"ecozen"},
-        {label:"Cheriesh",value:"cheriesh"},
-        {label:"ValuePlus",value:"valuePlus"},
-        {label:"Dlight",value:"dlight"},
-        {label:"Claro",value:"claro"},
-        {label:"Statcon",value:"statcon"},
-        {label:"Crompton",value:"crompton"}
+        {label:"Exide",value:"Exide"},
+        {label:"Genus",value:"Genus"},
+        {label:"Ecozen",value:"Ecozen"},
+        {label:"Cheriesh",value:"Cheriesh"},
+        {label:"ValuePlus",value:"ValuePlus"},
+        {label:"Dlight",value:"Dlight"},
+        {label:"Claro",value:"Claro"},
+        {label:"Statcon",value:"Statcon"},
+        {label:"Crompton",value:"Crompton"}
     ]
 
     const [complaintData , setComplaintData] = useState({
@@ -46,8 +47,36 @@ function WorkPage() {
         setComplaintData({...complaintData, [e.target.name]:e.target.value})
         // console.log(complaintData)
     }
+    // try to understand the flow of below handler carefully 
+    const selectChangeHandler = (name) => (value) => {
+        setComplaintData({
+          ...complaintData , [name]:value
+        })
+    }
+    // okk so till now i have gathered the form data entered by user , now it's time to send that to backend 
 
-    // const selectChangeHandler = 
+    const submitDataHandler = async (e) => {
+        e.preventDefault();
+        // first you need to use try catch , then use axios.post to send data to backend know where to send means on which api (create route at backend) 
+        // or is user login or not , is he authorized or not 
+
+        try {
+            const responseByAxios = await axios.post({LOGGERWORK_API_ENDPOINT} , complaintData , 
+                {headers: {"Content-Type" : "application/json"} , withCredentials:true}
+            )
+
+            if(responseByAxios?.data?.success){
+                toast.success("Complaint Created Successfully.");
+            }
+        } catch (error) {
+            console.log(error);
+            // you need to show the error .. so use toast 
+            // return error?.message;
+            toast.error(error?.response?.data?.message)
+        }
+
+
+    }
 
     return (
         <>
@@ -70,23 +99,23 @@ function WorkPage() {
                 </div>
                 <div className="InnerContainer">
                     <Label htmlFor="status">Status</Label>
-                    <Select value={complaintData.status} onValueChange={changeEventHandler} name="status">
+                    <Select value={complaintData.status} onValueChange={selectChangeHandler("status")} name="status">
                         <SelectTrigger id="status" className="w-full max-w-48">
                             <SelectValue placeholder="Select" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>Status</SelectLabel>
-                                <SelectItem value="pending">Pending</SelectItem>
-                                <SelectItem value="resolved">Resolved</SelectItem>
-                                <SelectItem value="transferred">Transferred</SelectItem>
+                                <SelectItem value="Pending">Pending</SelectItem>
+                                <SelectItem value="Resolved">Resolved</SelectItem>
+                                <SelectItem value="Transferred">Transferred</SelectItem>
                             </SelectGroup>
                         </SelectContent>
                     </Select>
                 </div>
                 <div className="InnerContainer">
                     <Label htmlFor="vendorName">Vendor Name</Label>
-                    <Select value={complaintData.vendorName} onValueChange={changeEventHandler} name="vendorName">
+                    <Select value={complaintData.vendorName} onValueChange={selectChangeHandler("vendorName")} name="vendorName">
                         <SelectTrigger id="vendorName" className="w-full max-w-48">
                             <SelectValue placeholder="Select" />
                         </SelectTrigger>
@@ -104,61 +133,61 @@ function WorkPage() {
                 </div>
                 <div className="InnerContainer">
                     <Label htmlFor="callOn">Call On</Label>
-                    <Select value={complaintData.callOn} onValueChange={changeEventHandler} name="callOn">
+                    <Select value={complaintData.callOn} onValueChange={selectChangeHandler("callOn")} name="callOn">
                         <SelectTrigger id="callOn" className="w-full max-w-48">
                             <SelectValue placeholder="Select" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>Call On</SelectLabel>
-                                <SelectItem value="whatsappCall">Whatsapp Call</SelectItem>
-                                <SelectItem value="simpleCall">Simple Call</SelectItem>
+                                <SelectItem value="Whatsapp Call">Whatsapp Call</SelectItem>
+                                <SelectItem value="Simple Call">Simple Call</SelectItem>
                             </SelectGroup>
                         </SelectContent>
                     </Select>
                 </div>
                 <div className="InnerContainer">
                     <Label htmlFor="accountability">Accountability</Label>
-                    <Select value={complaintData.accountability} onValueChange={changeEventHandler} name="accountability">
+                    <Select value={complaintData.accountability} onValueChange={selectChangeHandler("accountability")} name="accountability">
                         <SelectTrigger id="accountability" className="w-full max-w-48">
                             <SelectValue placeholder="Select" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>Accountability</SelectLabel>
-                                <SelectItem value="geoconTeam">Geocon Team</SelectItem>
-                                <SelectItem value="serviceTeam">Service Team</SelectItem>
-                                <SelectItem value="own">Own</SelectItem>
+                                <SelectItem value="Geocon Team">Geocon Team</SelectItem>
+                                <SelectItem value="Service Team">Service Team</SelectItem>
+                                <SelectItem value="Own">Own</SelectItem>
                             </SelectGroup>
                         </SelectContent>
                     </Select>
                 </div>
                 <div className="InnerContainer">
                     <Label htmlFor="contactedPerson">Contacted Person</Label>
-                    <Select value={complaintData.contactedPerson} onValueChange={changeEventHandler} name="contactedPerson">
+                    <Select value={complaintData.contactedPerson} onValueChange={selectChangeHandler("contactedPerson")} name="contactedPerson">
                         <SelectTrigger id="contactedPerson" className="w-full max-w-48">
                             <SelectValue placeholder="Select" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>Contacted Person</SelectLabel>
-                                <SelectItem value="customer">Customer</SelectItem>
-                                <SelectItem value="siteEngineer">Site Engineer</SelectItem>
+                                <SelectItem value="Customer">Customer</SelectItem>
+                                <SelectItem value="Site Engineer">Site Engineer</SelectItem>
                             </SelectGroup>
                         </SelectContent>
                     </Select>
                 </div>
                 <div className="InnerContainer ">
                     <Label htmlFor="solvedBy">Solved By</Label>
-                    <Select value={complaintData.solvedBy} onValueChange={changeEventHandler} name="solvedBy">
+                    <Select value={complaintData.solvedBy} onValueChange={selectChangeHandler("solvedBy")} name="solvedBy">
                         <SelectTrigger id="solvedBy" className="w-full max-w-48 ">
                             <SelectValue placeholder="Select" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>Solved By</SelectLabel>
-                                <SelectItem value="mayank">Mayank</SelectItem>
-                                <SelectItem value="tarun">Tarun</SelectItem>
+                                <SelectItem value="Mayank">Mayank</SelectItem>
+                                <SelectItem value="Tarun">Tarun</SelectItem>
                             </SelectGroup>
                         </SelectContent>
                     </Select>
@@ -188,4 +217,8 @@ export default WorkPage;
 //           11. Important Question - Try to find out the usage of all attriutes like value , name , id and htmlFor usage in DOM , console.log() and Backend Data Sending
 //           12. learn about the control on Input tag value by useState variable like we make somethings that when user type our variable value changes and then that displays on screen , learn why till adding changeEventHandler we can able to type anything in input
 //           13. you need to use onValueChange instead of onChange for select in shadcn -  onChange gives you an event object (e). But shadcn's Select uses onValueChange, which passes the selected value directly instead of an event object.
-//           14. Learn about this Function 
+//           14. if my state is simply a javascript object in react's memory , then how does it works after deployment on aws , is it happen in user browser or my aws space
+//           15. learn full flow from selecting a option to how data goes in state variable in select of shadcn
+//           16. learn something about higher order functions 
+//           17. 1. Need to implement Zod for data validation , 2. Responsiveness and DarkMode and all will be later rightnow the main motive is of MVP
+//           18. now after gathering , you need to learn how to send the data to backend through apis on behalf of different type of data 

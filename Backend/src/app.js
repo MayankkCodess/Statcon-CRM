@@ -1,7 +1,7 @@
 import express from "express"; 
 import cors from "cors"; 
 import cookieParser from "cookie-parser";
-
+import complaintRoute from "./routes/loggerWork.route.js"
 // below by using this method of express , all properties transfers to app
 const app = express();
 
@@ -24,6 +24,11 @@ app.use(express.static('public'));
 
 // cookie-parser works is i want , ki mai apne server se user ke browser ki cookies access bhi kar pau or set bhi kar pau 
 app.use(cookieParser()); 
+
+// all routes
+app.use("/api/v1/complaint",complaintRoute);
+
+
 
 
 export {app};

@@ -1,4 +1,4 @@
-import LoggerWork from "../models/loggerWork.model.js";
+import Complaint from "../models/loggerWork.model.js";
 // Always do this Approach - 
 // I genuinely like your approach to learning. 
 // You're writing the code yourself and adding functionality only when your own reasoning tells you something might be missing. 
@@ -26,7 +26,8 @@ export const AddLoggerWork = async (req, res) => {
       actionDescription,
       status,
       solvedBy,
-      contactedPersonAtSite,
+      contactedPerson,
+      accountability
     } = req.body;
     if (
       !mobileNumber ||
@@ -37,7 +38,8 @@ export const AddLoggerWork = async (req, res) => {
       !actionDescription ||
       !status ||
       !solvedBy ||
-      !contactedPersonAtSite
+      !contactedPerson  ||
+      !accountability  
     ) {
       return res.status(400).json({
         success: false,
@@ -57,7 +59,7 @@ export const AddLoggerWork = async (req, res) => {
     //   }
     // }
 
-    await LoggerWork.create({
+    await Complaint.create({
       mobileNumber,
       callOn,
       loggerSerialNumber,
@@ -66,7 +68,8 @@ export const AddLoggerWork = async (req, res) => {
       actionDescription,
       status,
       solvedBy,
-      contactedPersonAtSite,
+      contactedPerson,
+      accountability
     });
 
     return res.status(201).json({
@@ -75,25 +78,30 @@ export const AddLoggerWork = async (req, res) => {
     })
 
   } catch (error) {
-    next(error);
+    // next(error);
+    console.log(error);
+    return res.status(500).json({
+      success:false,
+      message:"Some Error Occured while Adding Complaint.Kindly Check AddComplaint Controller."
+    })
   }
 };
 
 // 
 
-const updateLoggerWork = async(req,res)=>{
-    try {
-        // suppose you have this pbm - 1. user is authenticated and authorized and 
-        // trying to edit a listing of logger issue 
-        // 2. you have to think is he have access or not , and also is he right now logged in or not 
-        // 3. you need to check what you want him to edit in those details
-        // 4. you need to confirm that validation is working even after saving the edited details 
-        // 5. use zod to validate if before going to mongodb 
-        const 
-    } catch (error) {
-        console.log(error);
-    }
-}
+// const updateLoggerWork = async(req,res)=>{
+//     try {
+//         // suppose you have this pbm - 1. user is authenticated and authorized and 
+//         // trying to edit a listing of logger issue 
+//         // 2. you have to think is he have access or not , and also is he right now logged in or not 
+//         // 3. you need to check what you want him to edit in those details
+//         // 4. you need to confirm that validation is working even after saving the edited details 
+//         // 5. use zod to validate if before going to mongodb 
+//         const 
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
 
 
 
