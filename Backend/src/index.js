@@ -1,17 +1,7 @@
-// we want .env to load all variable to each files as early as possible, so configuring dotenv must be in main file
-import dotenv from "dotenv";
+// we want .env to load all variable to each files as early as possible, so configuring dotenv must be in main file  
+// While building Statcon-CRM it is also better to load it in app.js then importing app.js in starting 
 import connectDB from "./config/dbConnection.js";
 import {app} from "./app.js";
-//this (.config) is an method which takes an object of path of env
-//you can also do it in package.json watch - chai code - lec -2 33:58 timeline
-dotenv.config({
-  path: "./.env",
-});
-
-app.get("/" , async (req,res)=>{
-    console.log("router working perfectly.");
-    res.send(`I am fine`);
-})
 
 // so when async db method completed it return promise so we handle below
 connectDB()

@@ -1,1 +1,1 @@
-export const LOGGERWORK_API_ENDPOINT = "http://localhost:3000/api/v1/complaint";
+export const COMPLAINT_API_ENDPOINT = "http://localhost:3000/api/v1/complaint";

@@ -12,9 +12,10 @@ import {
 import {Button} from "../components/ui/button.jsx";
 import { useState } from "react";
 import axios from "axios";
-import { toast } from "sonner"
+import { toast } from "sonner";
+import { COMPLAINT_API_ENDPOINT } from "../utils/constants.js";
 // Every New Learning is Covered Below :- 1. what happens from w-full and max-w-48
-function WorkPage() {
+function ComplaintForm() {
 
     // First you need to create Data for Vendor and then use that data to convert it into React Components
     const vendorList = [
@@ -61,18 +62,21 @@ function WorkPage() {
         // or is user login or not , is he authorized or not 
 
         try {
-            const responseByAxios = await axios.post({LOGGERWORK_API_ENDPOINT} , complaintData , 
-                {headers: {"Content-Type" : "application/json"} , withCredentials:true}
+            const responseByAxios = await axios.post(`${COMPLAINT_API_ENDPOINT}/addComplaint`, complaintData , 
+                {headers: {"Content-Type" : "application/json"} 
+                //, withCredentials:true // you can add this later when you have something like authenticated
+                }
             )
 
             if(responseByAxios?.data?.success){
+                // But remember , below you need to write error and success comes from backend res.json
                 toast.success("Complaint Created Successfully.");
             }
         } catch (error) {
             console.log(error);
             // you need to show the error .. so use toast 
             // return error?.message;
-            toast.error(error?.response?.data?.message)
+            toast.error("Some Error Occured While adding Complaint.")
         }
 
 
@@ -80,6 +84,7 @@ function WorkPage() {
 
     return (
         <>
+        <form action="" onSubmit={submitDataHandler}>
             <div className="OuterContainer max-w-7xl grid grid-cols-3 gap-4 mx-4 mt-4">
                 <div className="InnerContainer">
                     <Label htmlFor="mobileNumber" >Mobile Number</Label>
@@ -194,13 +199,14 @@ function WorkPage() {
                 </div>
             </div>
             <div className="complaintLogButton m-4 w-full max-w-160">
-                <Button className="w-full">Log Complaint</Button>
+                <Button type="submit" className="w-full">Log Complaint</Button>
             </div>
+        </form>    
         </>
     )
 }
 
-export default WorkPage;   
+export default ComplaintForm;   
 
 
 // Issues :- 1. What is the means of each one in Select of Shadcn 
@@ -222,3 +228,13 @@ export default WorkPage;
 //           16. learn something about higher order functions 
 //           17. 1. Need to implement Zod for data validation , 2. Responsiveness and DarkMode and all will be later rightnow the main motive is of MVP
 //           18. now after gathering , you need to learn how to send the data to backend through apis on behalf of different type of data 
+//           19. learn about toaster also - and also a brief summary of frontend flow
+//           20. Errors Found in Browser Inspect - 1. Wrong route in axios.post 2. Toaster 3. api endpoint import issue 4. accountability missing in controller
+//           21. CORS Error - Access to XMLHttpRequest at 'http://localhost:3000/api/v1/complaint/addComplaint' from origin 'http://localhost:5173' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+// CORS 21 - {       // WorkPage.jsx?t=1793179185250:96 AxiosError: Network Error
+//     at XMLHttpRequest.handleError (axios.js?v=5aafef59:2790:16)
+//     at Axios$1.request (axios.js?v=5aafef59:3804:37)
+//     at async submitDataHandler (WorkPage.jsx?t=1793179185250:87:28)
+// :3000/api/v1/complaint/addComplaint:1  Failed to load resource: net::ERR_FAILED
+// }
+//          22. CORS Error - Very Long and time taking due to dotenv.config() in index.js as it is loading late so i have to shift that in app.js 

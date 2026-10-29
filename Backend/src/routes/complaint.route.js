@@ -1,9 +1,9 @@
 import express from "express";
-import { AddLoggerWork } from "../controllers/loggerWork.controller.js";
+import { AddComplaint } from "../controllers/complaint.controller.js";
 
 const router = express.Router();
 
-router.route("/addComplaint").post(AddLoggerWork);
+router.route("/addComplaint").post(AddComplaint);
 
 export default router;
 

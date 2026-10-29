@@ -1,12 +1,12 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 
-import WorkPage from "./pages/WorkPage.jsx";
+import ComplaintForm from "./pages/ComplaintForm.jsx";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <WorkPage />,
+    path: "/complaint/addComplaint",
+    element: <ComplaintForm />,
   },
 ]);
 

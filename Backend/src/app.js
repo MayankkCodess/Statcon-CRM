@@ -1,7 +1,14 @@
+import dotenv from "dotenv";
+//this (.config) is an method which takes an object of path of env
+//you can also do it in package.json watch - chai code - lec -2 33:58 timeline
+dotenv.config({
+  path: "./.env",
+});
+
 import express from "express"; 
 import cors from "cors"; 
 import cookieParser from "cookie-parser";
-import complaintRoute from "./routes/loggerWork.route.js"
+import complaintRoute from "./routes/complaint.route.js"
 // below by using this method of express , all properties transfers to app
 const app = express();
 

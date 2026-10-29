@@ -1,4 +1,4 @@
-import Complaint from "../models/loggerWork.model.js";
+import Complaint from "../models/complaint.model.js";
 // Always do this Approach - 
 // I genuinely like your approach to learning. 
 // You're writing the code yourself and adding functionality only when your own reasoning tells you something might be missing. 
@@ -12,7 +12,7 @@ import Complaint from "../models/loggerWork.model.js";
 
 // 1. PostData Feature
 
-export const AddLoggerWork = async (req, res) => {
+export const AddComplaint = async (req, res) => {
   try {
     // My mind - Very good mayank -  before add work i need to check user is authenticated or not
     // 2nd i have to check is i have given authorization to him for
