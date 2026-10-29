@@ -1,10 +1,10 @@
 import express from "express";
-import { AddComplaint } from "../controllers/complaint.controller.js";
+import { AddComplaint , GetAllComplaints} from "../controllers/complaint.controller.js";
 
 const router = express.Router();
 
 router.route("/addComplaint").post(AddComplaint);
-
+router.route("/getAllComplaints").get(GetAllComplaints);
 export default router;
 
 

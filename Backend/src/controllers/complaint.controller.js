@@ -104,6 +104,34 @@ export const AddComplaint = async (req, res) => {
 // }
 
 
+export const GetAllComplaints = async (req,res) =>{
+  try {
+    // first we need to check is user logged in or he has been authorized for that or not 
+    // .find({}) always return a array of objects , now you need to think how will do that in frontend
+    const allComplaints = await Complaint.find({});
+
+    // console.log(allComplaints);
+    if(!allComplaints){
+      return res.status(404).json({
+        success:false,
+        message:"No Complaint Found"
+      })
+    }
+    if(allComplaints){
+      return res.status(200).json({
+        allComplaints,
+        success:true
+      })
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      success:false,
+      message:"No Complaint Found. Please Login Again"
+    })
+  }
+}
+
 
 
 
